@@ -1,0 +1,26 @@
+@(title: String)(javascript: Html)(css: Html)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>@title</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+@minified=@{ if (play.Play.isProd()) ".min" else "" }
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/twitterbootstrap/bootstrap"+ minified + ".css")">
+@css
+
+<script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/twitterbootstrap/bootstrap-dropdown.js")" type="text/javascript"></script>
+@javascript
+
+</head>
+<body>
+	@header()
+
+    <div class="container">
+	@content
+	</div>
+</body>
+</html>
