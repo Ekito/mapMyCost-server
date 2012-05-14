@@ -1,7 +1,10 @@
 package controllers;
 
+import mock.TransactionsListMock;
 import models.MappingInfo;
+import models.Transaction;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -15,27 +18,35 @@ public class Application extends Controller {
 		return ok(views.html.map.render());
 
 	}
-	
+
 	public static Result allTransactions() {
-		return TODO;
+
+		return ok(Json.toJson(TransactionsListMock.transactions.values()));
 	}
-	
+
 	public static Result transaction(String id) {
-		return TODO;
+
+		// find the transaction
+		Transaction transaction = TransactionsListMock.findTransaction(id);
+
+		if (transaction != null) {
+			return ok(Json.toJson(transaction));
+		}
+
+		return notFound();
 	}
-	
+
 	public static Result transactionMapping() {
 		Form<MappingInfo> mappingInfoForm = form(MappingInfo.class);
-		
+
 		MappingInfo mappingInfo = mappingInfoForm.bindFromRequest().get();
-		
+
 		// TODO search the transaction
-		
+
 		// TODO store the mapping
-		
+
 		// return the detailed description of the transaction
 		return transaction(mappingInfo.transactionId);
 	}
-
 
 }
