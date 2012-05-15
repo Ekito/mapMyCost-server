@@ -41,6 +41,7 @@ public class ApplicationControllersTest {
 		assertThat(status(result)).isEqualTo(OK);
 		assertThat(contentType(result)).isEqualTo("application/json");
 		assertThat(contentAsString(result)).contains("Gusto");
+		assertThat(contentAsString(result)).doesNotContain("summary");
 	}
 
 	@Test
@@ -51,6 +52,7 @@ public class ApplicationControllersTest {
 		assertThat(status(result)).isEqualTo(OK);
 		assertThat(contentType(result)).isEqualTo("application/json");
 		assertThat(contentAsString(result)).contains("Gusto");
+		assertThat(contentAsString(result)).doesNotContain("summary");
 	}
 
 	@Test

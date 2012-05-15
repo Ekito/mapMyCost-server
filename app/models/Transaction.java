@@ -6,9 +6,7 @@ package models;
  * @author ndeverge
  * 
  */
-public class Transaction {
-
-	public TransactionSummary summary;
+public class Transaction extends TransactionSummary {
 
 	public float longitude;
 
@@ -22,8 +20,8 @@ public class Transaction {
 
 	public Transaction(TransactionSummary summary, float latitude,
 			float longitude) {
-		super();
-		this.summary = summary;
+		super(summary.id, summary.date, summary.amount, summary.title,
+				summary.mapped);
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
