@@ -163,8 +163,24 @@ public class Application extends Controller {
 				}
 			}
 		}
+		Logger.debug("Total amount is " + total);
 
 		Collection<Heatpoint> heatpoints = new HashSet<Heatpoint>();
+		for (Transaction transaction : mappedTransactions) {
+			try {
+				// parse the amount to a float
+
+				int percentage = (int) (Float.valueOf(transaction.amount)
+						/ total * 100);
+				Heatpoint heatpoint = new Heatpoint(transaction.latitude,
+						transaction.longitude, percentage);
+
+				heatpoints.add(heatpoint);
+			} catch (NumberFormatException e) {
+				Logger.error("Error on the format of the amout: "
+						+ transaction.amount, e);
+			}
+		}
 
 		return heatpoints;
 	}
