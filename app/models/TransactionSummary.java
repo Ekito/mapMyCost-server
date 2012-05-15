@@ -20,7 +20,7 @@ public class TransactionSummary {
 	 */
 	public Date date;
 
-	public String amount;
+	public float amount;
 
 	public String title;
 
@@ -33,8 +33,8 @@ public class TransactionSummary {
 
 	}
 
-	public TransactionSummary(String id, Date date, String amount,
-			String title, boolean mapped) {
+	public TransactionSummary(String id, Date date, float amount, String title,
+			boolean mapped) {
 		super();
 		this.id = id;
 		this.date = date;

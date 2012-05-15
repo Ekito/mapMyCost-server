@@ -13,7 +13,7 @@ public class TransactionsListMock {
 
 	static {
 		TransactionSummary transactionSummary1 = new TransactionSummary(
-				"12345", new Date(), "12,34", "Resto Gusto Café", false);
+				"12345", new Date(), 12.34f, "Resto Gusto Café", false);
 
 		Transaction transaction1 = new Transaction(transactionSummary1,
 				43.604652f, 1.444209f);
@@ -21,7 +21,7 @@ public class TransactionsListMock {
 		transactions.put(transactionSummary1.id, transaction1);
 
 		TransactionSummary transactionSummary2 = new TransactionSummary(
-				"67890", new Date(), "35,34", "FNAC", true);
+				"67890", new Date(), 35.34f, "FNAC", true);
 
 		Transaction transaction2 = new Transaction(transactionSummary2,
 				43.605412f, 1.448543f);
@@ -29,7 +29,7 @@ public class TransactionsListMock {
 		transactions.put(transactionSummary2.id, transaction2);
 
 		TransactionSummary transactionSummary3 = new TransactionSummary(
-				"13579", new Date(), "23,34", "Carouf", false);
+				"13579", new Date(), 23.34f, "Carouf", false);
 
 		Transaction transaction3 = new Transaction(transactionSummary3,
 				43.615793f, 1.398311f);

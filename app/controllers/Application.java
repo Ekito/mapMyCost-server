@@ -41,6 +41,14 @@ public class Application extends Controller {
 
 		MappingInfo mappingInfo = mappingInfoForm.bindFromRequest().get();
 
+		// TODO retrieve the file from the request
+		// FilePart picture = request().body().asMultipartFormData()
+		// .getFile("picture");
+		//
+		// if (picture != null) {
+		// File file = picture.getFile();
+		// }
+
 		// TODO search the transaction
 
 		// TODO store the mapping
