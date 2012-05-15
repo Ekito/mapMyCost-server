@@ -117,7 +117,7 @@ public class TransactionsListMock {
 				1.443619f);
 		addSampleTransaction("100024", today, "50", "groucho", 43.604627f,
 				1.443769f);
-		addSampleTransaction("100125", today, "1300", "iConcept Toulouse",
+		addSampleTransaction("100125", today, "700", "iConcept Toulouse",
 				43.599833f, 1.441076f);
 
 	}
