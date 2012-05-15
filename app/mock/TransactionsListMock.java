@@ -12,63 +12,59 @@ public class TransactionsListMock {
 	public static Map<String, Transaction> transactions = new HashMap<String, Transaction>();
 
 	static {
-		TransactionSummary transactionSummary1 = new TransactionSummary(
-				"12345", new Date(), "12.34", "Resto Gusto Café", false);
 
-		Transaction transaction1 = new Transaction(transactionSummary1);
+		addSampleTransaction("12345", "12.34", "Resto Gusto Café");
 
-		transactions.put(transactionSummary1.id, transaction1);
+		addSampleTransaction("67890", "35.34", "FNAC", 43.605412f, 1.448543f);
 
-		TransactionSummary transactionSummary2 = new TransactionSummary(
-				"67890", new Date(), "35.34", "FNAC", true);
+		addSampleTransaction("13579", "23.34", "Carouf", 43.615793f, 1.398311f);
 
-		Transaction transaction2 = new Transaction(transactionSummary2,
-				43.605412f, 1.448543f, controllers.routes.Application.picture(
-						transactionSummary2.id).url());
+		addSampleTransaction("24680", "82.35", "Galeries Lafayette");
 
-		transactions.put(transactionSummary2.id, transaction2);
+		addSampleTransaction("12457", "182.35", "Castorama");
 
-		TransactionSummary transactionSummary3 = new TransactionSummary(
-				"13579", new Date(), "23.34", "Carouf", true);
+		addSampleTransaction("98765", "15.99", "Midica", 43.600257f, 1.444783f);
 
-		Transaction transaction3 = new Transaction(transactionSummary3,
-				43.615793f, 1.398311f, controllers.routes.Application.picture(
-						transactionSummary3.id).url());
+		addSampleTransaction("11111", "31.78", "Mac Do", 43.605221f, 1.448312f);
 
-		transactions.put(transactionSummary3.id, transaction3);
+		addSampleTransaction("22222", "51.56", "Celio", 43.604184f, 1.445539f);
 
-		TransactionSummary transactionSummary4 = new TransactionSummary(
-				"24680", new Date(), "82.35", "Galeries Lafayette", false);
+		addSampleTransaction("33333", "26.90", "Celio Sport", 43.601543f,
+				1.443715f);
 
-		Transaction transaction4 = new Transaction(transactionSummary4);
+		addSampleTransaction("44444", "69.55", "Monoprix", 43.603407f,
+				1.445475f);
 
-		transactions.put(transactionSummary4.id, transaction4);
+		addSampleTransaction("55555", "19.90", "Castela", 43.604899f, 1.442921f);
 
-		TransactionSummary transactionSummary5 = new TransactionSummary(
-				"12457", new Date(), "182.35", "Castorama", false);
+		addSampleTransaction("66666", "39.90", "Pharmacie", 43.60681f,
+				1.442299f);
 
-		Transaction transaction5 = new Transaction(transactionSummary5);
+		addSampleTransaction("77777", "49.50", "Cordonier", 43.606701f,
+				1.444756f);
 
-		transactions.put(transactionSummary5.id, transaction5);
+	}
 
-		TransactionSummary transactionSummary6 = new TransactionSummary(
-				"98765", new Date(), "15.99", "Midica", true);
+	private static void addSampleTransaction(String id, String amount,
+			String title) {
+		TransactionSummary transactionSummary = new TransactionSummary(id,
+				new Date(), amount, title, false);
 
-		Transaction transaction6 = new Transaction(transactionSummary6,
-				43.600257f, 1.444783f, controllers.routes.Application.picture(
-						transactionSummary6.id).url());
+		Transaction transaction = new Transaction(transactionSummary);
 
-		transactions.put(transactionSummary6.id, transaction6);
+		transactions.put(transactionSummary.id, transaction);
+	}
 
-		TransactionSummary transactionSummary7 = new TransactionSummary(
-				"11111", new Date(), "31.78", "Mac Do", true);
+	private static void addSampleTransaction(String id, String amount,
+			String title, float lat, float lon) {
+		TransactionSummary transactionSummary = new TransactionSummary(id,
+				new Date(), amount, title, true);
 
-		Transaction transaction7 = new Transaction(transactionSummary7,
-				43.605221f, 1.448312f, controllers.routes.Application.picture(
-						transactionSummary7.id).url());
+		Transaction transaction = new Transaction(transactionSummary, lat, lon,
+				controllers.routes.Application.picture(transactionSummary.id)
+						.url());
 
-		transactions.put(transactionSummary7.id, transaction7);
-
+		transactions.put(transactionSummary.id, transaction);
 	}
 
 	public static Transaction findTransaction(String id) {
