@@ -1,12 +1,16 @@
 package mock;
 
-import static play.test.Helpers.callAction;
-import static play.test.Helpers.contentAsString;
-
+ 
+ 
+ 
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.*;
 
 import play.core.j.JavaResultExtractor;
 import play.mvc.Result;
@@ -32,7 +36,7 @@ public class TransactionsListMock {
 		TransactionSummary transactionSummary2 = new TransactionSummary(
 				"67890", new Date(), "35.34", "FNAC", true);
 
-		Transaction transaction2 = new Transaction(transactionSummary2,
+	 Transaction transaction2 = new Transaction(transactionSummary2,
 				43.605412f, 1.448543f, controllers.routes.Application.picture(
 						transactionSummary2.id).url());
 
@@ -41,18 +45,25 @@ public class TransactionsListMock {
 		TransactionSummary transactionSummary3 = new TransactionSummary(
 				"13579", new Date(), "23.34", "Carouf", true);
 
-		Transaction transaction3 = new Transaction(transactionSummary3,
-				43.615793f, 1.398311f, controllers.routes.Application.picture(
+	Transaction transaction3 = new Transaction(transactionSummary3,
+				43.615793f, 1.398311f, controllers.routes.Application.picture( 
 						transactionSummary3.id).url());
 
-		transactions.put(transactionSummary3.id, transaction3);
+		transactions.put(transactionSummary3.id, transaction3); 
 		
-		//Result result = AxaBanqueMock.allTransactions("1000000");
+	//Result result = AxaBanqueMock.allTransactions("1000000");
 		
 		Result result =AxaBanqueMock.allTransactions("1000000");
 		byte[] content =  JavaResultExtractor.getBody(result);
-		AxaTransaction listT;
-		Json.fromJson(Json.parse(new String(content)),Class<AxaTransaction>);
+	
+		    Gson gson = new Gson();
+		
+		    Type collectionType = new TypeToken<List<AxaTransaction>>(){}.getType();
+		 List<AxaTransaction> allTransactions = gson.fromJson(new String(content), collectionType);
+		 
+		
+		
+		  
 		
 		
 

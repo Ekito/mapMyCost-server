@@ -13,14 +13,5 @@ public class AxaAccount {
 	public String label;
 	
 	
-	/*public Map toHashMap() {
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("accountid", id.toString());
-		data.put("customer", customer+"");
-		data.put("currency",  "\""+currency +"\"");
-		data.put("bic",  "\""+bic+ "\"");
-		data.put("label", "\""+label +"\"");
-		return data;
 
-	}*/
 }

@@ -18,7 +18,7 @@ public class Transaction extends TransactionSummary {
 	public String picture;
 
 	public Transaction() {
-
+		 
 	}
 
 	public Transaction(TransactionSummary summary, float latitude,

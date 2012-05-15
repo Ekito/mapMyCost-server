@@ -7,7 +7,7 @@ import java.util.HashSet;
 import mock.PicturesListMock;
 import mock.TransactionsListMock;
 import models.MappingInfo;
-import models.Picture;
+import models.Picture; 
 import models.Transaction;
 import models.TransactionSummary;
 
