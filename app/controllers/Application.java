@@ -1,6 +1,6 @@
 package controllers;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -10,6 +10,9 @@ import models.MappingInfo;
 import models.Picture;
 import models.Transaction;
 import models.TransactionSummary;
+
+import org.apache.commons.io.FileUtils;
+
 import play.Logger;
 import play.data.Form;
 import play.libs.Json;
@@ -74,25 +77,44 @@ public class Application extends Controller {
 
 		if (picture != null) {
 			Logger.debug("Getting picture " + picture.getFilename());
-			File file = picture.getFile();
 
 			// store the file
-			// try {
-			// byte[] fileAsBytes = FileUtils.readFileToByteArray(file);
-			//
-			// addPicture(mappingInfo.id, fileAsBytes);
-			//
-			// } catch (IOException e) {
-			// return badRequest(e.getMessage());
-			// }
+			try {
+				byte[] fileAsBytes = FileUtils.readFileToByteArray(picture
+						.getFile());
+
+				addPicture(mappingInfo.id, fileAsBytes,
+						picture.getContentType());
+
+			} catch (IOException e) {
+				return badRequest(e.getMessage());
+			}
 		}
 
 		// store the mapping
 		transaction.mapped = true;
+		// store the url of the picture
+		transaction.picture = controllers.routes.Application.picture(
+				mappingInfo.id).url();
 		updateTransaction(transaction);
 
 		// return the detailed description of the transaction
 		return transaction(mappingInfo.id);
+	}
+
+	public static Result picture(String id) {
+
+		Picture picture = findPicture(id);
+
+		if (picture != null) {
+
+			response().setContentType(picture.contentType);
+
+			return ok(picture.bytes);
+		}
+
+		return notFound();
+
 	}
 
 	// ---------- mocked services ------------------ //
@@ -106,8 +128,13 @@ public class Application extends Controller {
 				transaction);
 	}
 
-	private static Picture addPicture(String id, byte[] bytes) {
-		return PicturesListMock.addPicture(id, bytes);
+	private static Picture addPicture(String id, byte[] bytes,
+			String contentType) {
+		return PicturesListMock.addPicture(id, bytes, contentType);
+	}
+
+	private static Picture findPicture(String id) {
+		return PicturesListMock.findPicture(id);
 	}
 
 }
