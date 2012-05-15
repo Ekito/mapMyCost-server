@@ -28,6 +28,14 @@ public class TransactionsListMock {
 
 		transactions.put(transactionSummary2.id, transaction2);
 
+		TransactionSummary transactionSummary3 = new TransactionSummary(
+				"13579", new Date(), "23,34", "Carouf", false);
+
+		Transaction transaction3 = new Transaction(transactionSummary3,
+				43.615793f, 1.398311f);
+
+		transactions.put(transactionSummary3.id, transaction3);
+
 	}
 
 	public static Transaction findTransaction(String id) {
