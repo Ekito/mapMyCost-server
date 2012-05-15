@@ -13,7 +13,9 @@ GET     /transactions/:id           controllers.Application.transaction(id:Strin
 
 PUT     /transactions/mapping		controllers.Application.transactionMapping()
 
-GET		/axa/customers/:customerId/accounts		controllers.AxaBanqueMock.allAccounts(customerId:String)  
+GET     /picture/:id               controllers.Application.picture(id:String)
+
+#GET		/axa/customers/:customerId/accounts		controllers.AxaBanqueMock.allAccounts(customerId:String)  
 GET		/axa/transactions/:id 						controllers.AxaBanqueMock.transaction(id:String)
 
 ################
@@ -22,7 +24,7 @@ GET		/axa/transactions/:id 						controllers.AxaBanqueMock.transaction(id:String
 # Customer API
 #
 # Returns a customer list linked to the authenticated user. An authenticated user is a person who is connected to apps that use this method.
-GET /axa/customers						controllers.AxaBanqueMock.todo()
+#GET /axa/customers						controllers.AxaBanqueMock.todo()
 # 									
 # GET /axa/customers/:customer-id		
 # GET /axa/customers/:customer-id/accounts
