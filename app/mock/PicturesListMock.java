@@ -42,7 +42,7 @@ public class PicturesListMock {
 				Logger.debug("Loading mock image");
 				byte[] bytes = IOUtils.toByteArray(picture2AsStream);
 
-				addPicture("13579", bytes, "image/jpg");
+				addPicture("13579", bytes, "image/jpeg");
 
 			} catch (IOException e) {
 				Logger.error("Error loading an image", e);
