@@ -1,21 +1,11 @@
 package mock;
 
-import static play.test.Helpers.callAction;
-import static play.test.Helpers.contentAsString;
-
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import play.core.j.JavaResultExtractor;
-import play.mvc.Result;
-
-import controllers.AxaBanqueMock;
 
 import models.Transaction;
 import models.TransactionSummary;
-import play.libs.Json;
 
 public class TransactionsListMock {
 
@@ -46,15 +36,14 @@ public class TransactionsListMock {
 						transactionSummary3.id).url());
 
 		transactions.put(transactionSummary3.id, transaction3);
-		
-		//Result result = AxaBanqueMock.allTransactions("1000000");
-		
-		Result result =AxaBanqueMock.allTransactions("1000000");
-		byte[] content =  JavaResultExtractor.getBody(result);
-		AxaTransaction listT;
-		Json.fromJson(Json.parse(new String(content)),Class<AxaTransaction>);
-		
-		
+
+		// Result result = AxaBanqueMock.allTransactions("1000000");
+
+		// Result result =AxaBanqueMock.allTransactions("1000000");
+		// byte[] content = JavaResultExtractor.getBody(result);
+		// AxaTransaction listT;
+		// Json.fromJson(Json.parse(new String(content)),Class<AxaTransaction>);
+		//
 
 		TransactionSummary transactionSummary4 = new TransactionSummary(
 				"24680", new Date(), "82.35", "Galeries Lafayette", false);
