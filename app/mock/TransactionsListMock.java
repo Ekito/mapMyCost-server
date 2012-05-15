@@ -43,6 +43,12 @@ public class TransactionsListMock {
 		addSampleTransaction("77777", "49.50", "Cordonier", 43.606701f,
 				1.444756f);
 
+		addSampleTransaction("88888", "35.90", "Virgin Megastore", 43.604621f,
+				1.445687f);
+
+		addSampleTransaction("99999", "58.90", "Pharmacie St Cyp", 43.598202f,
+				1.431398f);
+
 	}
 
 	private static void addSampleTransaction(String id, String amount,
