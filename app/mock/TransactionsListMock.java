@@ -21,7 +21,7 @@ public class TransactionsListMock {
 		transactions.put(transactionSummary1.id, transaction1);
 
 		TransactionSummary transactionSummary2 = new TransactionSummary(
-				"67890", new Date(), "35,34", "FNAC", false);
+				"67890", new Date(), "35,34", "FNAC", true);
 
 		Transaction transaction2 = new Transaction(transactionSummary2,
 				43.605412f, 1.448543f);
