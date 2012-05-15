@@ -24,6 +24,8 @@ public class ApplicationControllersTest {
 		data.put("latitude", "43.604652");
 		data.put("longitude", "1.444209");
 
+		// TODO add the picture to the request in the body
+
 		FakeRequest fakeRequest = new FakeRequest();
 		fakeRequest.withFormUrlEncodedBody(data);
 
