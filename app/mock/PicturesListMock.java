@@ -53,8 +53,8 @@ public class PicturesListMock {
 
 	}
 
-	public static Picture addPicture(String id, byte[] bytes, String contentType) {
-		Picture picture = new Picture(id, bytes, contentType);
+	public static Picture addPicture(String id, byte[] bytes) {
+		Picture picture = new Picture(id, bytes);
 
 		pictures.put(id, picture);
 
