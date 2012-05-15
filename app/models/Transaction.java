@@ -12,18 +12,22 @@ public class Transaction extends TransactionSummary {
 
 	public float latitude;
 
-	// TODO picture
+	/**
+	 * The picture represented by an url on the server.
+	 */
+	public String picture;
 
 	public Transaction() {
 
 	}
 
 	public Transaction(TransactionSummary summary, float latitude,
-			float longitude) {
+			float longitude, String picture) {
 		super(summary.id, summary.date, summary.amount, summary.title,
 				summary.mapped);
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.picture = picture;
 	}
 
 }

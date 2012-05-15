@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -10,6 +11,7 @@ import models.TransactionSummary;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 
 public class Application extends Controller {
@@ -56,13 +58,13 @@ public class Application extends Controller {
 
 		MappingInfo mappingInfo = mappingInfoForm.bindFromRequest().get();
 
-		// TODO retrieve the file from the request
-		// FilePart picture = request().body().asMultipartFormData()
-		// .getFile("picture");
-		//
-		// if (picture != null) {
-		// File file = picture.getFile();
-		// }
+		// retrieve the file from the request
+		FilePart picture = request().body().asMultipartFormData()
+				.getFile("picture");
+
+		if (picture != null) {
+			File file = picture.getFile();
+		}
 
 		// TODO search the transaction
 

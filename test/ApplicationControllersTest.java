@@ -30,7 +30,7 @@ public class ApplicationControllersTest {
 		Result result = callAction(controllers.routes.ref.Application
 				.transactionMapping());
 
-		// TODO assertThat(status(result)).isEqualTo(OK);
+		assertThat(status(result)).isEqualTo(OK);
 	}
 
 	@Test
