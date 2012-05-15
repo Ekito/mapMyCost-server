@@ -21,29 +21,11 @@ div.olLayerGoogleCopyright {
 $(document).ready(function() {
 	
 	var testData={
-            max: 46,
-            data: [{lat: 43.605412, lon: 1.448543, count: 40}, {lat: 43.615793, lon: 1.398311, count: 40}]
+            max: 100, //  a percentage
+            data: []
          };
 
-	var transformedTestData = { max: testData.max , data: [] },
-	data = testData.data,
-	datalen = data.length,
-	nudata = [];
-	
-	// in order to use the OpenLayers Heatmap Layer we have to transform our data into 
-	// { max: <max>, data: [{lonlat: <OpenLayers.LonLat>, count: <count>},...]}
-	
-	while(datalen--){
-	nudata.push({
-	    lonlat: new OpenLayers.LonLat(data[datalen].lon, data[datalen].lat),
-	    count: data[datalen].count
-	});
-	}
-	
-	transformedTestData.data = nudata;
-
-	
-	var map = new OpenLayers.Map( 'map');
+	var map = new OpenLayers.Map('map');
     
 	var gsat = new OpenLayers.Layer.Google(
             "Google Satellite",
@@ -61,7 +43,32 @@ $(document).ready(function() {
         map.getProjectionObject()
     ), 12);
     
-    heatmap.setDataSet(transformedTestData);
+    $.getJSON("@controllers.routes.Application.heatpoints()",
+            function(jsonData) {
+      testData.data = jsonData;
+      
+      var transformedTestData = { max: testData.max , data: [] },
+      data = testData.data,
+      datalen = data.length,
+      nudata = [];
+      
+      // in order to use the OpenLayers Heatmap Layer we have to transform our data into 
+      // { max: <max>, data: [{lonlat: <OpenLayers.LonLat>, count: <count>},...]}
+      
+      while(datalen--){
+      nudata.push({
+          lonlat: new OpenLayers.LonLat(data[datalen].lon, data[datalen].lat),
+          count: data[datalen].count
+      });
+      }
+      
+      transformedTestData.data = nudata;
+      
+      heatmap.setDataSet(transformedTestData);
+      
+    });
+    
+    
 });
 </script>
 }

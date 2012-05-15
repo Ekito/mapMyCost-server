@@ -65,4 +65,13 @@ public class ApplicationControllersTest {
 		assertThat(status(result)).isEqualTo(NOT_FOUND);
 	}
 
+	@Test
+	public void testHeatpoints() throws Exception {
+		Result result = callAction(controllers.routes.ref.Application
+				.heatpoints());
+
+		assertThat(status(result)).isEqualTo(OK);
+		assertThat(contentType(result)).isEqualTo("application/json");
+	}
+
 }

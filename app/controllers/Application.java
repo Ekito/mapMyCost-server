@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import mock.PicturesListMock;
 import mock.TransactionsListMock;
+import models.Heatpoint;
 import models.MappingInfo;
 import models.Picture; 
 import models.Transaction;
@@ -93,6 +94,10 @@ public class Application extends Controller {
 
 		// store the mapping
 		transaction.mapped = true;
+		// store the lat & long
+		transaction.longitude = mappingInfo.longitude;
+		transaction.latitude = mappingInfo.latitude;
+
 		// store the url of the picture
 		transaction.picture = controllers.routes.Application.picture(
 				mappingInfo.id).url();
@@ -117,6 +122,13 @@ public class Application extends Controller {
 
 	}
 
+	public static Result heatpoints() {
+
+		Collection<Heatpoint> heatpoints = findHeatpoints();
+
+		return ok(Json.toJson(heatpoints));
+	}
+
 	// ---------- mocked services ------------------ //
 
 	private static Transaction findTransaction(final String id) {
@@ -137,4 +149,43 @@ public class Application extends Controller {
 		return PicturesListMock.findPicture(id);
 	}
 
+	private static Collection<Heatpoint> findHeatpoints() {
+
+		Collection<Transaction> mappedTransactions = new HashSet<Transaction>();
+		float total = 0;
+		for (Transaction transaction : TransactionsListMock.transactions
+				.values()) {
+			if (transaction.mapped) {
+				mappedTransactions.add(transaction);
+
+				try {
+					// parse the amount to a float
+					total += Float.valueOf(transaction.amount);
+				} catch (NumberFormatException e) {
+					Logger.error("Error on the format of the amout: "
+							+ transaction.amount, e);
+				}
+			}
+		}
+		Logger.debug("Total amount is " + total);
+
+		Collection<Heatpoint> heatpoints = new HashSet<Heatpoint>();
+		for (Transaction transaction : mappedTransactions) {
+			try {
+				// parse the amount to a float
+
+				int percentage = (int) (Float.valueOf(transaction.amount)
+						/ total * 100);
+				Heatpoint heatpoint = new Heatpoint(transaction.latitude,
+						transaction.longitude, percentage);
+
+				heatpoints.add(heatpoint);
+			} catch (NumberFormatException e) {
+				Logger.error("Error on the format of the amout: "
+						+ transaction.amount, e);
+			}
+		}
+
+		return heatpoints;
+	}
 }
