@@ -36,14 +36,7 @@ public class TransactionsListMock {
 						transactionSummary3.id).url());
 
 		transactions.put(transactionSummary3.id, transaction3);
-
-		// Result result = AxaBanqueMock.allTransactions("1000000");
-
-		// Result result =AxaBanqueMock.allTransactions("1000000");
-		// byte[] content = JavaResultExtractor.getBody(result);
-		// AxaTransaction listT;
-		// Json.fromJson(Json.parse(new String(content)),Class<AxaTransaction>);
-		//
+ 
 
 		TransactionSummary transactionSummary4 = new TransactionSummary(
 				"24680", new Date(), "82.35", "Galeries Lafayette", false);
@@ -66,6 +59,10 @@ public class TransactionsListMock {
 
 		transactions.put(transactionSummary6.id, transaction6);
 
+	
+		 
+		 
+		
 	}
 
 	public static Transaction findTransaction(String id) {
