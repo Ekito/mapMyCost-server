@@ -4,10 +4,13 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 
+import mock.PicturesListMock;
 import mock.TransactionsListMock;
 import models.MappingInfo;
+import models.Picture;
 import models.Transaction;
 import models.TransactionSummary;
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -44,7 +47,7 @@ public class Application extends Controller {
 	public static Result transaction(String id) {
 
 		// find the transaction
-		Transaction transaction = TransactionsListMock.findTransaction(id);
+		Transaction transaction = findTransaction(id);
 
 		if (transaction != null) {
 			return ok(Json.toJson(transaction));
@@ -58,20 +61,53 @@ public class Application extends Controller {
 
 		MappingInfo mappingInfo = mappingInfoForm.bindFromRequest().get();
 
+		// search the transaction
+		Transaction transaction = findTransaction(mappingInfo.id);
+
+		if (transaction == null) {
+			return notFound();
+		}
+
 		// retrieve the file from the request
 		FilePart picture = request().body().asMultipartFormData()
 				.getFile("picture");
 
 		if (picture != null) {
+			Logger.debug("Getting picture " + picture.getFilename());
 			File file = picture.getFile();
+
+			// store the file
+			// try {
+			// byte[] fileAsBytes = FileUtils.readFileToByteArray(file);
+			//
+			// addPicture(mappingInfo.id, fileAsBytes);
+			//
+			// } catch (IOException e) {
+			// return badRequest(e.getMessage());
+			// }
 		}
 
-		// TODO search the transaction
-
-		// TODO store the mapping
+		// store the mapping
+		transaction.mapped = true;
+		updateTransaction(transaction);
 
 		// return the detailed description of the transaction
 		return transaction(mappingInfo.id);
+	}
+
+	// ---------- mocked services ------------------ //
+
+	private static Transaction findTransaction(final String id) {
+		return TransactionsListMock.findTransaction(id);
+	}
+
+	private static Transaction updateTransaction(final Transaction transaction) {
+		return TransactionsListMock.transactions.put(transaction.id,
+				transaction);
+	}
+
+	private static Picture addPicture(String id, byte[] bytes) {
+		return PicturesListMock.addPicture(id, bytes);
 	}
 
 }

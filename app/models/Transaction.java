@@ -30,4 +30,9 @@ public class Transaction extends TransactionSummary {
 		this.picture = picture;
 	}
 
+	public Transaction(TransactionSummary summary) {
+		super(summary.id, summary.date, summary.amount, summary.title,
+				summary.mapped);
+	}
+
 }
