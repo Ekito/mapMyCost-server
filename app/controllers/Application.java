@@ -94,6 +94,10 @@ public class Application extends Controller {
 
 		// store the mapping
 		transaction.mapped = true;
+		// store the lat & long
+		transaction.longitude = mappingInfo.longitude;
+		transaction.latitude = mappingInfo.latitude;
+
 		// store the url of the picture
 		transaction.picture = controllers.routes.Application.picture(
 				mappingInfo.id).url();
