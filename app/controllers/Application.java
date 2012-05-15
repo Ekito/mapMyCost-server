@@ -71,7 +71,7 @@ public class Application extends Controller {
 		// TODO store the mapping
 
 		// return the detailed description of the transaction
-		return transaction(mappingInfo.transactionId);
+		return transaction(mappingInfo.id);
 	}
 
 }

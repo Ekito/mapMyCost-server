@@ -7,7 +7,7 @@ package models;
  * 
  */
 public class MappingInfo {
-	public String transactionId;
+	public String id;
 
 	public float longitude;
 

@@ -20,7 +20,7 @@ public class ApplicationControllersTest {
 	public void testTransactionMapping() throws Exception {
 
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("transactionId", "12345");
+		data.put("id", "12345");
 		data.put("latitude", "43.604652");
 		data.put("longitude", "1.444209");
 
