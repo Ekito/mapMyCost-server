@@ -7,6 +7,10 @@ GET     /                           controllers.Application.index()
 
 GET     /map                        controllers.Application.showMap()
 
+GET     /phonemap                   controllers.Application.phonemap()
+
+GET     /reset                      controllers.Application.reset()
+
 GET     /transactions               controllers.Application.allTransactions()
 
 GET     /transactions/:id           controllers.Application.transaction(id:String)

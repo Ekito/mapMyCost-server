@@ -13,6 +13,36 @@ public class TransactionsListMock {
 
 	static {
 
+		addSampleDataset();
+
+	}
+
+	private static void addSampleTransaction(String id, String amount,
+			String title) {
+		TransactionSummary transactionSummary = new TransactionSummary(id,
+				new Date(), amount, title, false);
+
+		Transaction transaction = new Transaction(transactionSummary);
+
+		transactions.put(transactionSummary.id, transaction);
+	}
+
+	private static void addSampleTransaction(String id, String amount,
+			String title, float lat, float lon) {
+		TransactionSummary transactionSummary = new TransactionSummary(id,
+				new Date(), amount, title, true);
+
+		Transaction transaction = new Transaction(transactionSummary, lat, lon,
+				controllers.routes.Application.picture(transactionSummary.id)
+						.url());
+
+		transactions.put(transactionSummary.id, transaction);
+	}
+
+	public static void addSampleDataset() {
+
+		transactions.clear();
+
 		addSampleTransaction("12345", "12.34", "Resto Gusto Café");
 
 		addSampleTransaction("67890", "35.34", "FNAC", 43.605412f, 1.448543f);
@@ -48,29 +78,6 @@ public class TransactionsListMock {
 
 		addSampleTransaction("99999", "58.90", "Pharmacie St Cyp", 43.598202f,
 				1.431398f);
-
-	}
-
-	private static void addSampleTransaction(String id, String amount,
-			String title) {
-		TransactionSummary transactionSummary = new TransactionSummary(id,
-				new Date(), amount, title, false);
-
-		Transaction transaction = new Transaction(transactionSummary);
-
-		transactions.put(transactionSummary.id, transaction);
-	}
-
-	private static void addSampleTransaction(String id, String amount,
-			String title, float lat, float lon) {
-		TransactionSummary transactionSummary = new TransactionSummary(id,
-				new Date(), amount, title, true);
-
-		Transaction transaction = new Transaction(transactionSummary, lat, lon,
-				controllers.routes.Application.picture(transactionSummary.id)
-						.url());
-
-		transactions.put(transactionSummary.id, transaction);
 	}
 
 	public static Transaction findTransaction(String id) {

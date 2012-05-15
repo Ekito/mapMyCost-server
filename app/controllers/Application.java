@@ -8,7 +8,7 @@ import mock.PicturesListMock;
 import mock.TransactionsListMock;
 import models.Heatpoint;
 import models.MappingInfo;
-import models.Picture; 
+import models.Picture;
 import models.Transaction;
 import models.TransactionSummary;
 
@@ -28,6 +28,24 @@ public class Application extends Controller {
 	}
 
 	public static Result showMap() {
+		return ok(views.html.map.render());
+
+	}
+
+	public static Result phonemap() {
+		return ok(views.html.map.render());
+
+	}
+
+	/**
+	 * Reset the dataset
+	 * 
+	 * @return
+	 */
+	public static Result reset() {
+
+		TransactionsListMock.addSampleDataset();
+
 		return ok(views.html.map.render());
 
 	}
