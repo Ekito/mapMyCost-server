@@ -13,9 +13,27 @@ GET     /transactions/:id           controllers.Application.transaction(id:Strin
 
 PUT     /transactions/mapping		controllers.Application.transactionMapping()
 
-GET		/axa/accounts				controllers.AxaBanqueMock.allAccounts()
-#GET		/axa/transactions
-GET		/axa/transactions/:id 		controllers.AxaBanqueMock.transaction(id:String)
+GET		/axa/accounts		controllers.AxaBanqueMock.allAccounts() 
+GET		/axa/transactions/:id 						controllers.AxaBanqueMock.transaction(id:String)
+
+################
+# API AXA BANQUE
+#
+# Customer API
+# GET /customers 									# Returns a customer list linked to the authenticated user. An authenticated user is a person who is connected to apps that use this method.
+# GET /customers/:customer-id		
+# GET /customers/:customer-id/accounts
+#
+# Account API
+# GET /accounts/:account-id 							# Returns account dataset for a single account.
+# GET /accounts/:account-id/cards 					# Returns data related to cards linked to the single account.
+# GET /accounts/:account-id/balances 					# Returns account balances dataset for a single account.
+# GET /accounts/:account-id/transactions 				# Returns transactions dataset for a single account.
+# GET /accounts/:account-id/outstanding-transactions 	# Returns outstanding transactions set for a single account.
+#
+# Transaction API
+# GET /transactions/:transaction_id 					# Returns transaction dataset for a single transaction.
+################
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
