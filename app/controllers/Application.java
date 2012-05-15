@@ -1,8 +1,12 @@
 package controllers;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import mock.TransactionsListMock;
 import models.MappingInfo;
 import models.Transaction;
+import models.TransactionSummary;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -21,7 +25,18 @@ public class Application extends Controller {
 
 	public static Result allTransactions() {
 
-		return ok(Json.toJson(TransactionsListMock.transactions.values()));
+		// a small mapping to send light objects to the client
+		Collection<TransactionSummary> summaries = new HashSet<TransactionSummary>();
+
+		for (Transaction transaction : TransactionsListMock.transactions
+				.values()) {
+			TransactionSummary summary = new TransactionSummary(transaction.id,
+					transaction.date, transaction.amount, transaction.title,
+					transaction.mapped);
+			summaries.add(summary);
+		}
+
+		return ok(Json.toJson(summaries));
 	}
 
 	public static Result transaction(String id) {
