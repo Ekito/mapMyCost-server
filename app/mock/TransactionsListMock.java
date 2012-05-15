@@ -36,7 +36,6 @@ public class TransactionsListMock {
 						transactionSummary3.id).url());
 
 		transactions.put(transactionSummary3.id, transaction3);
- 
 
 		TransactionSummary transactionSummary4 = new TransactionSummary(
 				"24680", new Date(), "82.35", "Galeries Lafayette", false);
@@ -53,16 +52,23 @@ public class TransactionsListMock {
 		transactions.put(transactionSummary5.id, transaction5);
 
 		TransactionSummary transactionSummary6 = new TransactionSummary(
-				"98765", new Date(), "15.99", "Midica", false);
+				"98765", new Date(), "15.99", "Midica", true);
 
-		Transaction transaction6 = new Transaction(transactionSummary6);
+		Transaction transaction6 = new Transaction(transactionSummary6,
+				43.600257f, 1.444783f, controllers.routes.Application.picture(
+						transactionSummary6.id).url());
 
 		transactions.put(transactionSummary6.id, transaction6);
 
-	
-		 
-		 
-		
+		TransactionSummary transactionSummary7 = new TransactionSummary(
+				"11111", new Date(), "31.78", "Mac Do", true);
+
+		Transaction transaction7 = new Transaction(transactionSummary7,
+				43.605221f, 1.448312f, controllers.routes.Application.picture(
+						transactionSummary7.id).url());
+
+		transactions.put(transactionSummary7.id, transaction7);
+
 	}
 
 	public static Transaction findTransaction(String id) {

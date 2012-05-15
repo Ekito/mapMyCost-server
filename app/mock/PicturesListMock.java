@@ -16,33 +16,24 @@ public class PicturesListMock {
 	public static Map<String, Picture> pictures = new HashMap<String, Picture>();
 
 	static {
-		// load an image
-		InputStream picture1AsStream = PicturesListMock.class
-				.getResourceAsStream("/mock/fnac.jpg");
+		// load sample images
+		createSamplePicture("/mock/fnac.jpg", "67890", "image/jpeg");
 
-		if (picture1AsStream != null) {
-			try {
-				Logger.debug("Loading mock image");
-				byte[] bytes = IOUtils.toByteArray(picture1AsStream);
+		createSamplePicture("/mock/caissiere.jpg", "13579", "image/jpeg");
 
-				addPicture("67890", bytes, "image/jpeg");
+	}
 
-			} catch (IOException e) {
-				Logger.error("Error loading an image", e);
-			}
-		} else {
-			Logger.error("Image not found");
-		}
-
+	private static Picture createSamplePicture(String path, String id,
+			String contentType) {
 		InputStream picture2AsStream = PicturesListMock.class
-				.getResourceAsStream("/mock/caissiere.jpg");
+				.getResourceAsStream(path);
 
 		if (picture2AsStream != null) {
 			try {
 				Logger.debug("Loading mock image");
 				byte[] bytes = IOUtils.toByteArray(picture2AsStream);
 
-				addPicture("13579", bytes, "image/jpeg");
+				return addPicture(id, bytes, contentType);
 
 			} catch (IOException e) {
 				Logger.error("Error loading an image", e);
@@ -50,7 +41,7 @@ public class PicturesListMock {
 		} else {
 			Logger.error("Image not found");
 		}
-
+		return null;
 	}
 
 	public static Picture addPicture(String id, byte[] bytes, String contentType) {

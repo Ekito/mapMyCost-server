@@ -20,20 +20,15 @@ div.olLayerGoogleCopyright {
 
 $(document).ready(function() {
 	
-	var testData={
-            max: 100, //  a percentage
-            data: []
-         };
-
 	var map = new OpenLayers.Map('map');
     
 	var gsat = new OpenLayers.Layer.Google(
             "Google Satellite",
-            {type: google.maps.MapTypeId.SATELLITE}
+            {type: google.maps.MapTypeId.ROADMAP}
         );
     map.addLayer(gsat);
     
-    heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, gsat, {visible: true, radius:10}, {isBaseLayer: false, opacity: 0.3, projection: new OpenLayers.Projection("EPSG:4326")});
+    heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, gsat, {visible: true, radius:20}, {isBaseLayer: false, opacity: 0.3, projection: new OpenLayers.Projection("EPSG:4326")});
     map.addLayer(heatmap);
 
     // Google.v3 uses EPSG:900913 as projection, so we have to
@@ -43,24 +38,23 @@ $(document).ready(function() {
         map.getProjectionObject()
     ), 12);
     
+    // call the service to get the heatpoints
     $.getJSON("@controllers.routes.Application.heatpoints()",
             function(jsonData) {
-      testData.data = jsonData;
       
-      var transformedTestData = { max: testData.max , data: [] },
-      data = testData.data,
+      var transformedTestData = { max: 30 , data: jsonData },
+      data = jsonData;
       datalen = data.length,
       nudata = [];
       
       // in order to use the OpenLayers Heatmap Layer we have to transform our data into 
       // { max: <max>, data: [{lonlat: <OpenLayers.LonLat>, count: <count>},...]}
-      
       while(datalen--){
-      nudata.push({
-          lonlat: new OpenLayers.LonLat(data[datalen].lon, data[datalen].lat),
-          count: data[datalen].count
-      });
-      }
+	      nudata.push({
+	          lonlat: new OpenLayers.LonLat(data[datalen].lon, data[datalen].lat),
+	          count: data[datalen].count
+	      });
+	  }
       
       transformedTestData.data = nudata;
       
