@@ -25,7 +25,7 @@ public class PicturesListMock {
 				Logger.debug("Loading mock image");
 				byte[] bytes = IOUtils.toByteArray(picture1AsStream);
 
-				addPicture("67890", bytes, "image/jpg");
+				addPicture("67890", bytes, "image/jpeg");
 
 			} catch (IOException e) {
 				Logger.error("Error loading an image", e);
@@ -42,7 +42,7 @@ public class PicturesListMock {
 				Logger.debug("Loading mock image");
 				byte[] bytes = IOUtils.toByteArray(picture2AsStream);
 
-				addPicture("13579", bytes, "image/jpg");
+				addPicture("13579", bytes, "image/jpeg");
 
 			} catch (IOException e) {
 				Logger.error("Error loading an image", e);
@@ -53,8 +53,8 @@ public class PicturesListMock {
 
 	}
 
-	public static Picture addPicture(String id, byte[] bytes) {
-		Picture picture = new Picture(id, bytes);
+	public static Picture addPicture(String id, byte[] bytes, String contentType) {
+		Picture picture = new Picture(id, bytes, contentType);
 
 		pictures.put(id, picture);
 

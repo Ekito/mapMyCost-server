@@ -1,25 +1,11 @@
 package mock;
 
- 
- 
- 
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.*;
-
-import play.core.j.JavaResultExtractor;
-import play.mvc.Result;
-
-import controllers.AxaBanqueMock;
 
 import models.Transaction;
 import models.TransactionSummary;
-import play.libs.Json;
 
 public class TransactionsListMock {
 
@@ -36,7 +22,7 @@ public class TransactionsListMock {
 		TransactionSummary transactionSummary2 = new TransactionSummary(
 				"67890", new Date(), "35.34", "FNAC", true);
 
-	 Transaction transaction2 = new Transaction(transactionSummary2,
+		Transaction transaction2 = new Transaction(transactionSummary2,
 				43.605412f, 1.448543f, controllers.routes.Application.picture(
 						transactionSummary2.id).url());
 
@@ -45,27 +31,40 @@ public class TransactionsListMock {
 		TransactionSummary transactionSummary3 = new TransactionSummary(
 				"13579", new Date(), "23.34", "Carouf", true);
 
-	Transaction transaction3 = new Transaction(transactionSummary3,
-				43.615793f, 1.398311f, controllers.routes.Application.picture( 
+		Transaction transaction3 = new Transaction(transactionSummary3,
+				43.615793f, 1.398311f, controllers.routes.Application.picture(
 						transactionSummary3.id).url());
 
-		transactions.put(transactionSummary3.id, transaction3); 
-		
-	//Result result = AxaBanqueMock.allTransactions("1000000");
-		
-		Result result =AxaBanqueMock.allTransactions("1000000");
-		byte[] content =  JavaResultExtractor.getBody(result);
-	
-		    Gson gson = new Gson();
-		
-		    Type collectionType = new TypeToken<List<AxaTransaction>>(){}.getType();
-		 List<AxaTransaction> allTransactions = gson.fromJson(new String(content), collectionType);
-		 
-		
-		
-		  
-		
-		
+		transactions.put(transactionSummary3.id, transaction3);
+
+		// Result result = AxaBanqueMock.allTransactions("1000000");
+
+		// Result result =AxaBanqueMock.allTransactions("1000000");
+		// byte[] content = JavaResultExtractor.getBody(result);
+		// AxaTransaction listT;
+		// Json.fromJson(Json.parse(new String(content)),Class<AxaTransaction>);
+		//
+
+		TransactionSummary transactionSummary4 = new TransactionSummary(
+				"24680", new Date(), "82.35", "Galeries Lafayette", false);
+
+		Transaction transaction4 = new Transaction(transactionSummary4);
+
+		transactions.put(transactionSummary4.id, transaction4);
+
+		TransactionSummary transactionSummary5 = new TransactionSummary(
+				"12457", new Date(), "182.35", "Castorama", false);
+
+		Transaction transaction5 = new Transaction(transactionSummary5);
+
+		transactions.put(transactionSummary5.id, transaction5);
+
+		TransactionSummary transactionSummary6 = new TransactionSummary(
+				"98765", new Date(), "15.99", "Midica", false);
+
+		Transaction transaction6 = new Transaction(transactionSummary6);
+
+		transactions.put(transactionSummary6.id, transaction6);
 
 	}
 
