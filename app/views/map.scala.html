@@ -42,7 +42,7 @@ $(document).ready(function() {
     $.getJSON("@controllers.routes.Application.heatpoints()",
             function(jsonData) {
       
-      var transformedTestData = { max: 30 , data: jsonData },
+      var transformedTestData = { max: 120 , data: jsonData },
       data = jsonData;
       datalen = data.length,
       nudata = [];

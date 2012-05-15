@@ -192,10 +192,11 @@ public class Application extends Controller {
 			try {
 				// parse the amount to a float
 
-				int percentage = (int) (Float.valueOf(transaction.amount)
-						/ total * 100);
+				// int percentage = (int) (Float.valueOf(transaction.amount)
+				// / total * 100);
 				Heatpoint heatpoint = new Heatpoint(transaction.latitude,
-						transaction.longitude, percentage);
+						transaction.longitude, (int) Float.valueOf(
+								transaction.amount).floatValue());
 
 				heatpoints.add(heatpoint);
 			} catch (NumberFormatException e) {
