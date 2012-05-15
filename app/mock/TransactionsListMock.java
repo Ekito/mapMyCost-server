@@ -37,6 +37,27 @@ public class TransactionsListMock {
 
 		transactions.put(transactionSummary3.id, transaction3);
 
+		TransactionSummary transactionSummary4 = new TransactionSummary(
+				"24680", new Date(), "82.35", "Galeries Lafayette", false);
+
+		Transaction transaction4 = new Transaction(transactionSummary4);
+
+		transactions.put(transactionSummary4.id, transaction4);
+
+		TransactionSummary transactionSummary5 = new TransactionSummary(
+				"12457", new Date(), "182.35", "Castorama", false);
+
+		Transaction transaction5 = new Transaction(transactionSummary5);
+
+		transactions.put(transactionSummary5.id, transaction5);
+
+		TransactionSummary transactionSummary6 = new TransactionSummary(
+				"98765", new Date(), "15.99", "Midica", false);
+
+		Transaction transaction6 = new Transaction(transactionSummary6);
+
+		transactions.put(transactionSummary6.id, transaction6);
+
 	}
 
 	public static Transaction findTransaction(String id) {
