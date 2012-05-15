@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import mock.PicturesListMock;
 import mock.TransactionsListMock;
+import models.Heatpoint;
 import models.MappingInfo;
 import models.Picture;
 import models.Transaction;
@@ -117,6 +118,13 @@ public class Application extends Controller {
 
 	}
 
+	public static Result heatpoints() {
+
+		Collection<Heatpoint> heatpoints = findHeatpoints();
+
+		return ok(Json.toJson(heatpoints));
+	}
+
 	// ---------- mocked services ------------------ //
 
 	private static Transaction findTransaction(final String id) {
@@ -137,4 +145,27 @@ public class Application extends Controller {
 		return PicturesListMock.findPicture(id);
 	}
 
+	private static Collection<Heatpoint> findHeatpoints() {
+
+		Collection<Transaction> mappedTransactions = new HashSet<Transaction>();
+		float total = 0;
+		for (Transaction transaction : TransactionsListMock.transactions
+				.values()) {
+			if (transaction.mapped) {
+				mappedTransactions.add(transaction);
+
+				try {
+					// parse the amount to a float
+					total += Float.valueOf(transaction.amount);
+				} catch (NumberFormatException e) {
+					Logger.error("Error on the format of the amout: "
+							+ transaction.amount, e);
+				}
+			}
+		}
+
+		Collection<Heatpoint> heatpoints = new HashSet<Heatpoint>();
+
+		return heatpoints;
+	}
 }

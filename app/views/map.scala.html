@@ -21,8 +21,11 @@ div.olLayerGoogleCopyright {
 $(document).ready(function() {
 	
 	var testData={
-            max: 46,
-            data: [{lat: 43.605412, lon: 1.448543, count: 40}, {lat: 43.615793, lon: 1.398311, count: 40}]
+            max: 100,
+            data: [
+                   {lat: 43.605412, lon: 1.448543, count: 90}, 
+                   {lat: 43.615793, lon: 1.398311, count: 60}
+                  ]
          };
 
 	var transformedTestData = { max: testData.max , data: [] },
@@ -41,9 +44,8 @@ $(document).ready(function() {
 	}
 	
 	transformedTestData.data = nudata;
-
 	
-	var map = new OpenLayers.Map( 'map');
+	var map = new OpenLayers.Map('map');
     
 	var gsat = new OpenLayers.Layer.Google(
             "Google Satellite",
