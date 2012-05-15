@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Account {
+public class AxaAccount {
 	public BigInteger id; 
 	public long customer;
 	public String type;
@@ -13,7 +13,7 @@ public class Account {
 	public String label;
 	
 	
-	public Map toHashMap() {
+	/*public Map toHashMap() {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("accountid", id.toString());
 		data.put("customer", customer+"");
@@ -22,5 +22,5 @@ public class Account {
 		data.put("label", "\""+label +"\"");
 		return data;
 
-	}
+	}*/
 }
