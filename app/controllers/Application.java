@@ -33,7 +33,7 @@ public class Application extends Controller {
 	}
 
 	public static Result phonemap() {
-		return ok(views.html.map.render());
+		return ok(views.html.phonemap.render());
 
 	}
 
@@ -153,9 +153,8 @@ public class Application extends Controller {
 		return TransactionsListMock.findTransaction(id);
 	}
 
-	private static Transaction updateTransaction(final Transaction transaction) {
-		return TransactionsListMock.transactions.put(transaction.id,
-				transaction);
+	private static void updateTransaction(final Transaction transaction) {
+		TransactionsListMock.transactions.put(transaction.id, transaction);
 	}
 
 	private static Picture addPicture(String id, byte[] bytes,
