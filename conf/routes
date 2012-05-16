@@ -9,6 +9,8 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
+GET     /documentation              controllers.Application.documentation()
+
 GET     /reset                      controllers.Application.reset()
 
 GET     /transactions               controllers.Application.allTransactions()

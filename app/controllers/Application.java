@@ -37,6 +37,11 @@ public class Application extends Controller {
 
 	}
 
+	public static Result documentation() {
+		return TODO;
+
+	}
+
 	/**
 	 * Reset the dataset
 	 * 
