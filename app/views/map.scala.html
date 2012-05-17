@@ -61,16 +61,40 @@ $(document).ready(function() {
       
     });
     
+    map.events.register('moveend', this, function() {
+      console.log(map.getExtent());
+      console.log(map.getExtent().transform(
+        map.getProjectionObject(), new OpenLayers.Projection("CRS:84")));
+      
+      
+   
+    });
+    
     
 });
 </script>
 }
 
 @main("Map My Cost !")(javascript)(css) {
-
-    <h2>Map</h2>
-    
-    <div id="map" style="width: 600px; height: 450px">
+    <div class="row">
+      <div class="well span6">
+        <h2>Map</h2>
+      
+        <div id="map" style="width: 450px; height: 450px">
+        </div>
+      </div>
+      <div class="well span5">
+          <h2>Purchases</h2>
+          <table id="purchases" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Desc.</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+          </table>
+      </div>
     </div>
 
 }
