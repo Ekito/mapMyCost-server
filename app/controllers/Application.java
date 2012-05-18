@@ -130,6 +130,11 @@ public class Application extends Controller {
 		return transaction(mappingInfo.id);
 	}
 
+	public static Result transactionsInArea() {
+
+		return TODO;
+	}
+
 	public static Result picture(String id) {
 
 		Picture picture = findPicture(id);

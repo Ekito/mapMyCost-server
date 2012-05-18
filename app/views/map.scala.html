@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     // Google.v3 uses EPSG:900913 as projection, so we have to
     // transform our coordinates
-    map.setCenter(new OpenLayers.LonLat(1.448543,43.605412 ).transform(
+    map.setCenter(new OpenLayers.LonLat(1.448543,43.605412).transform(
         new OpenLayers.Projection("EPSG:4326"),
         map.getProjectionObject()
     ), 12);
@@ -62,11 +62,15 @@ $(document).ready(function() {
     });
     
     map.events.register('moveend', this, function() {
-      console.log(map.getExtent());
-      console.log(map.getExtent().transform(
-        map.getProjectionObject(), new OpenLayers.Projection("CRS:84")));
       
-      
+      // convert the coordinates
+      // we get: bottom, left, right, top
+      var bounds = map.getExtent().transform(map.getProjectionObject(), 
+    		  new OpenLayers.Projection("EPSG:4326")
+      );
+    
+      // request the purchases in this area
+      $.getJSON("/transactions/area/" + bounds.bottom + "/" + bounds.left + "/" + bounds.right + "/" + bounds.top + "/");
    
     });
     

@@ -18,8 +18,15 @@ public class PicturesListMock {
 	static {
 		// load sample images
 		createSamplePicture("/mock/fnac.jpg", "67890", "image/jpeg");
-
 		createSamplePicture("/mock/caissiere.jpg", "13579", "image/jpeg");
+		createSamplePicture("/mock/77777.jpg", "77777", "image/jpeg");
+		createSamplePicture("/mock/99999.jpg", "99999", "image/jpeg");
+		createSamplePicture("/mock/100001.jpg", "100001", "image/jpeg");
+		createSamplePicture("/mock/100003.jpg", "100003", "image/jpeg");
+		createSamplePicture("/mock/100007.jpg", "100007", "image/jpeg");
+		createSamplePicture("/mock/100019.jpg", "100019", "image/jpeg");
+		createSamplePicture("/mock/100023.jpg", "100023", "image/jpeg");
+		createSamplePicture("/mock/100024.jpg", "100024", "image/jpeg");
 
 	}
 

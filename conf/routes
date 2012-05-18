@@ -17,6 +17,8 @@ GET     /transactions               controllers.Application.allTransactions()
 
 GET     /transactions/:id           controllers.Application.transaction(id:String)
 
+GET     /transactions/area/         controllers.Application.transactionsInArea()
+
 PUT     /transactions/mapping		controllers.Application.transactionMapping()
 
 GET     /picture/:id                controllers.Application.picture(id:String)
