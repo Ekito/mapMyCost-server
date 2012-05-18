@@ -111,6 +111,9 @@ public class TransactionsListMock {
 				1.443769f);
 		addSampleTransaction("100125", today, "700", "iConcept Toulouse");
 
+		addSampleTransaction("100026", today, "139,50", "Ladurée", 48.871814f,
+				2.299994f);
+
 	}
 
 	private static void addSampleTransaction(String id, Date date,
