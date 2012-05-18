@@ -3,7 +3,10 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 import mock.PicturesListMock;
 import mock.TransactionsListMock;
@@ -138,7 +141,21 @@ public class Application extends Controller {
 		Area area = areaForm.bindFromRequest().get();
 
 		// look for transactions in this area
-		Collection<TransactionSummary> transactionSummaries = findTransactionsInArea(area);
+		List<TransactionSummary> transactionSummaries = findTransactionsInArea(area);
+
+		// order the transactions by date
+		Collections.sort(transactionSummaries,
+				new Comparator<TransactionSummary>() {
+					@Override
+					public int compare(TransactionSummary o1,
+							TransactionSummary o2) {
+						if (o1.date.before(o2.date)) {
+							return -1;
+						} else {
+							return 1;
+						}
+					}
+				});
 
 		return ok(Json.toJson(transactionSummaries));
 	}
@@ -175,9 +192,8 @@ public class Application extends Controller {
 		TransactionsListMock.transactions.put(transaction.id, transaction);
 	}
 
-	private static Collection<TransactionSummary> findTransactionsInArea(
-			Area area) {
-		Collection<TransactionSummary> transactionSummaries = new ArrayList<TransactionSummary>();
+	private static List<TransactionSummary> findTransactionsInArea(Area area) {
+		List<TransactionSummary> transactionSummaries = new ArrayList<TransactionSummary>();
 
 		for (Transaction transaction : TransactionsListMock.transactions
 				.values()) {
