@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import mock.PicturesListMock;
 import mock.TransactionsListMock;
+import models.Area;
 import models.Heatpoint;
 import models.MappingInfo;
 import models.Picture;
@@ -132,7 +133,13 @@ public class Application extends Controller {
 
 	public static Result transactionsInArea() {
 
-		return TODO;
+		Form<Area> areaForm = form(Area.class);
+		Area area = areaForm.bindFromRequest().get();
+
+		// look for transactions in this area
+		Collection<TransactionSummary> transactionSummaries = findTransactionsInArea(area);
+
+		return ok(Json.toJson(transactionSummaries));
 	}
 
 	public static Result picture(String id) {
@@ -165,6 +172,31 @@ public class Application extends Controller {
 
 	private static void updateTransaction(final Transaction transaction) {
 		TransactionsListMock.transactions.put(transaction.id, transaction);
+	}
+
+	private static Collection<TransactionSummary> findTransactionsInArea(
+			Area area) {
+		Collection<TransactionSummary> transactionSummaries = new HashSet<TransactionSummary>();
+
+		for (Transaction transaction : TransactionsListMock.transactions
+				.values()) {
+			if (transaction.mapped) {
+				if (transaction.latitude >= area.bottom
+						&& transaction.latitude <= area.top) {
+					if (transaction.longitude <= area.right
+							&& transaction.longitude >= area.left) {
+						TransactionSummary transactionSummary = new TransactionSummary(
+								transaction.id, transaction.date,
+								transaction.amount, transaction.title,
+								transaction.mapped);
+
+						transactionSummaries.add(transactionSummary);
+					}
+				}
+			}
+		}
+
+		return transactionSummaries;
 	}
 
 	private static Picture addPicture(String id, byte[] bytes,

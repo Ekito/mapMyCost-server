@@ -71,51 +71,45 @@ public class TransactionsListMock {
 
 		addSampleTransaction("100001", today, "51.56", "Celio", 43.604184f,
 				1.445539f);
-		addSampleTransaction("100002", today, "45", "filochard", 43.603019f,
+		addSampleTransaction("100002", today, "45", "Le Filochard", 43.603019f,
 				1.436055f);
-		addSampleTransaction("100003", today, "25", "otium", 43.601325f,
+		addSampleTransaction("100003", today, "25", "Otium", 43.601325f,
 				1.441344f);
-		addSampleTransaction("100004", today, "100", "restaurant emile",
+		addSampleTransaction("100004", today, "100", "Restaurant Emile",
 				43.597332f, 1.44556f);
-		addSampleTransaction("100005", today, "22", "restaurant le 19",
+		addSampleTransaction("100005", today, "22", "Restaurant le 19",
 				43.597495f, 1.445569f);
-		addSampleTransaction("100006", today, "45", "restaurant Michel Sarran",
+		addSampleTransaction("100006", today, "45", "Restaurant Michel Sarran",
 				43.597328f, 1.445153f);
-		addSampleTransaction("100007", today, "76", "resto Jazz", 43.597361f,
+		addSampleTransaction("100007", today, "76", "Resto Jazz", 43.597361f,
 				1.44585f);
-		addSampleTransaction("100008", today, "33", "resto abder", 43.597306f,
+		addSampleTransaction("100008", today, "33", "Resto abder", 43.597306f,
 				1.444989f);
-		addSampleTransaction("100009", today, "12", "bistro saint georges",
+		addSampleTransaction("100009", today, "12", "Bistro Saint Georges",
 				43.601885f, 1.447513f);
-		addSampleTransaction("100010", today, "9", "le bistro d'eric",
+		addSampleTransaction("100010", today, "9", "Le Bistro d'Eric",
 				43.601574f, 1.447706f);
-		addSampleTransaction("100011", today, "12", "bistro campel", 43.60204f,
+		addSampleTransaction("100011", today, "12", "Bistro Campel", 43.60204f,
 				1.451848f);
-		addSampleTransaction("100012", today, "7", "le bistro de julie",
+		addSampleTransaction("100012", today, "7", "Le bistro de Julie",
 				43.601434f, 1.451933f);
-		addSampleTransaction("100013", today, "8", "bistro de lille",
+		addSampleTransaction("100013", today, "8", "Bistro de Lille",
 				43.602351f, 1.456461f);
-		addSampleTransaction("100014", today, "9", "le chevillard", 43.608737f,
+		addSampleTransaction("100014", today, "9", "Le Chevillard", 43.608737f,
 				1.450346f);
-		addSampleTransaction("100015", today, "56", "eros & agap", 43.613242f,
-				1.444595f);
-		addSampleTransaction("100016", today, "23", "storix", 43.613786f,
-				1.443458f);
-		addSampleTransaction("100017", today, "45", "venus 2", 43.618726f,
-				1.432085f);
-		addSampleTransaction("100018", today, "67", "mango", 43.603982f,
+		addSampleTransaction("100018", today, "67", "Mango", 43.603982f,
 				1.443973f);
-		addSampleTransaction("100019", today, "89", "grenier d'anais",
+		addSampleTransaction("100019", today, "89", "Grenier d'Anais",
 				43.604138f, 1.444831f);
-		addSampleTransaction("100020", today, "32", "ethic et chix",
+		addSampleTransaction("100020", today, "32", "Ethic et Chix",
 				43.604542f, 1.44556f);
-		addSampleTransaction("100021", today, "32", "carte blanche",
+		addSampleTransaction("100021", today, "32", "Carte Blanche",
 				43.603609f, 1.444187f);
-		addSampleTransaction("100022", today, "4", "corleone", 43.604674f,
+		addSampleTransaction("100022", today, "4", "Corleone", 43.604674f,
 				1.44291f);
-		addSampleTransaction("100023", today, "24", "zara ", 43.604969f,
+		addSampleTransaction("100023", today, "24", "Zara ", 43.604969f,
 				1.443619f);
-		addSampleTransaction("100024", today, "50", "groucho", 43.604627f,
+		addSampleTransaction("100024", today, "50", "Groucho", 43.604627f,
 				1.443769f);
 		addSampleTransaction("100125", today, "700", "iConcept Toulouse");
 
