@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -176,7 +177,7 @@ public class Application extends Controller {
 
 	private static Collection<TransactionSummary> findTransactionsInArea(
 			Area area) {
-		Collection<TransactionSummary> transactionSummaries = new HashSet<TransactionSummary>();
+		Collection<TransactionSummary> transactionSummaries = new ArrayList<TransactionSummary>();
 
 		for (Transaction transaction : TransactionsListMock.transactions
 				.values()) {
