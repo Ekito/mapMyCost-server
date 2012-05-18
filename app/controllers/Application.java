@@ -173,36 +173,19 @@ public class Application extends Controller {
 
 	private static Collection<Heatpoint> findHeatpoints() {
 
-		Collection<Transaction> mappedTransactions = new HashSet<Transaction>();
-		float total = 0;
+		Collection<Heatpoint> heatpoints = new HashSet<Heatpoint>();
 		for (Transaction transaction : TransactionsListMock.transactions
 				.values()) {
-			if (transaction.mapped) {
-				mappedTransactions.add(transaction);
-
-				try {
-					// parse the amount to a float
-					total += Float.valueOf(transaction.amount);
-				} catch (NumberFormatException e) {
-					Logger.error("Error on the format of the amout: "
-							+ transaction.amount, e);
-				}
-			}
-		}
-		Logger.debug("Total amount is " + total);
-
-		Collection<Heatpoint> heatpoints = new HashSet<Heatpoint>();
-		for (Transaction transaction : mappedTransactions) {
 			try {
-				// parse the amount to a float
+				if (transaction.mapped) {
+					// parse the amount to a float
 
-				// int percentage = (int) (Float.valueOf(transaction.amount)
-				// / total * 100);
-				Heatpoint heatpoint = new Heatpoint(transaction.latitude,
-						transaction.longitude, (int) Float.valueOf(
-								transaction.amount).floatValue());
+					Heatpoint heatpoint = new Heatpoint(transaction.latitude,
+							transaction.longitude, (int) Float.valueOf(
+									transaction.amount).floatValue());
 
-				heatpoints.add(heatpoint);
+					heatpoints.add(heatpoint);
+				}
 			} catch (NumberFormatException e) {
 				Logger.error("Error on the format of the amout: "
 						+ transaction.amount, e);
