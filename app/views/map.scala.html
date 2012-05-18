@@ -26,6 +26,7 @@ function findPurchasesInArea(map) {
             new OpenLayers.Projection("EPSG:4326")
     );
 	
+	// call the service
     $.getJSON("/transactions/area/", 
            {
               bottom: bounds.bottom,
@@ -38,6 +39,7 @@ function findPurchasesInArea(map) {
                 // remove previous items
                 $('#purchases > tbody:last').children().remove();
                 
+                // add items to the table
                 $.each(jsonData, function(key, value) {
                     
                     var date = new Date(value.date);
@@ -90,6 +92,7 @@ $(document).ready(function() {
         map.getProjectionObject()
     ), 12);
     
+    // update the list of purchased items
     findPurchasesInArea(map);
     
     // call the service to get the heatpoints
@@ -116,15 +119,12 @@ $(document).ready(function() {
       
     });
     
-    // update the list of purchases when the map is moved or zoomed
+    // update the list of purchased items when the map is moved or zoomed
     map.events.register('moveend', this, function() {
       
       findPurchasesInArea(map);
     
     });
-    
-      
-    
     
 });
 </script>
