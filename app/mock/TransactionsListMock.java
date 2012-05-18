@@ -69,8 +69,6 @@ public class TransactionsListMock {
 		addSampleTransaction("99999", today, "58.90", "Pharmacie St Cyp",
 				43.598202f, 1.431398f);
 
-		addSampleTransaction("100001", today, "51.56", "Celio", 43.604184f,
-				1.445539f);
 		addSampleTransaction("100002", today, "45", "Le Filochard", 43.603019f,
 				1.436055f);
 		addSampleTransaction("100003", today, "25", "Otium", 43.601325f,
