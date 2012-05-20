@@ -26,6 +26,10 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 
+import javax.ws.rs.*;
+import com.wordnik.swagger.core.*;
+
+@Api(value = "/transactions", description = "Operations about transactions")
 public class Application extends Controller {
 
 	public static Result index() {
@@ -42,11 +46,6 @@ public class Application extends Controller {
 
 	}
 
-	public static Result documentation() {
-		return TODO;
-
-	}
-
 	/**
 	 * Reset the dataset
 	 * 
@@ -60,6 +59,8 @@ public class Application extends Controller {
 
 	}
 
+ 
+	@ApiOperation(value = "Find all transactions.", notes = "Returns a list of transaction summaries (with the id, date, amount, title)", responseClass = "models.TransactionSummary", httpMethod = "GET")
 	public static Result allTransactions() {
 
 		// a small mapping to send light objects to the client
@@ -76,7 +77,12 @@ public class Application extends Controller {
 		return ok(Json.toJson(summaries));
 	}
 
-	public static Result transaction(String id) {
+  @Path("/transactions/{id}")   
+            @PathParam("id")
+	@ApiOperation(value = "Find a transaction.", notes = "Returns a transaction according to its id", responseClass = "models.Transaction", httpMethod = "GET")
+	@ApiErrors({
+    @ApiError(code = 404, reason = "Transaction not found")})
+	public static Result transaction(@ApiParam(name = "id : String", value = "ID of transaction that needs to be fetched", required = true)String id) {
 
 		// find the transaction
 		Transaction transaction = findTransaction(id);

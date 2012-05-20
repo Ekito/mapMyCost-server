@@ -11,7 +11,12 @@ object ApplicationBuild extends Build {
       // Add your project dependencies here,
       
       "commons-io" % "commons-io" % "2.0.1", 
-      "com.google.code.gson" % "gson" % "1.1"
+      "com.google.code.gson" % "gson" % "1.1",    
+      "org.codehaus.jackson" % "jackson-jaxrs" % "1.9.5",
+    "org.codehaus.jackson" % "jackson-xc" % "1.9.5",
+    "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.5",
+    "org.codehaus.jackson" % "jackson-core-asl" % "1.9.5",
+      "swagger-play2" %% "swagger-play2" % "1.1-SNAPSHOT"
        
     )
 

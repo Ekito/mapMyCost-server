@@ -9,8 +9,6 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
-GET     /documentation              controllers.Application.documentation()
-
 GET     /reset                      controllers.Application.reset()
 
 GET     /transactions               controllers.Application.allTransactions()
@@ -25,9 +23,15 @@ GET     /picture/:id                controllers.Application.picture(id:String)
 
 GET     /heatpoints                 controllers.Application.heatpoints()
 
+## API Documentation
+GET     /resources.json             controllers.ApiHelpController.getResources
+GET     /transactions.json          controllers.ApiHelpController.getResource(path = "/transactions")
+
 GET		/axa/customers/:customerId/accounts		controllers.AxaBanqueMock.allAccounts(customerId:String)
 GET     /axa/accounts/:accountId/transactions  controllers.AxaBanqueMock.allTransactions(accountId:String)
 GET		/axa/transactions/:id 						controllers.AxaBanqueMock.transaction(id:String)
+
+
 
 ################
 # API AXA BANQUE
