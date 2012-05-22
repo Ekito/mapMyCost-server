@@ -1,15 +1,22 @@
 package controllers;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.TimeZone;
 
 import mock.AxaTransaction;
+import mock.TransactionsListMock;
+import models.Transaction;
+import models.TransactionSummary;
 
- 
+
+import org.codehaus.jackson.JsonNode;
 import org.w3c.dom.Document;
 
 import com.google.gson.Gson;
- 
+
 import com.google.gson.reflect.TypeToken;
 
 import play.Logger;
@@ -24,68 +31,75 @@ public class Job extends Controller {
 
 
 
-	public static Result index() {
-
-		//setQueryParameter("customer_id", "1000000")
-		/*	Logger.debug("requete API /customers ");
-		String feedUrl = "https://sandbox-api.axabanque.fr/customers";
-		AsyncResult r1 =  async(WS.url(feedUrl)
-				.setQueryParameter("client_id", "2544355445982401905")
-				.setQueryParameter("access_token", "3907304021428063542")
-				.setQueryParameter("customer_id", "1000000").get()
-
-				.map(new Function<WS.Response, Result>() {
-					@Override
-					public Result apply(WS.Response response) {
-						try {
-							// String res = WSUtil.getCityTemperature(response);
-							Document doc = response.asXml();
-							Logger.debug(doc.toString());
-							Logger.debug("****");
-							Logger.debug(response.toString());
-
-							String result = "City: "
-									+ XPath.selectText("//City", doc)
-									+ ", weather: "
-									+ XPath.selectText("//Description", doc)
-									+ ", temperature: "
-									+ XPath.selectText("//Temperature", doc);
-							return ok();
-						} catch (Exception e) {
-
-							Logger.debug(response.asJson().toString());
-							return TODO;
-						}
-					}
-				}
-
-				));
-		 */
+	public static Result getAxaTransactions(String customerId, String accountId) {
+		//exemple : customerId: "1000000", accountId: 20000001520
 
 
 		AsyncResult r3 = async(
-		        WS.url("https://sandbox-api.axabanque.fr/accounts/20000001520/transactions")
-		        .setQueryParameter("client_id", "2544355445982401905")
+				WS.url("https://sandbox-api.axabanque.fr/accounts/"+accountId+ "/transactions")
+				.setQueryParameter("client_id", "2544355445982401905")
 				.setQueryParameter("access_token", "3907304021428063542")
-				.setQueryParameter("customer_id", "1000000")
+				.setQueryParameter("customer_id", customerId)
 				.setQueryParameter("Count", "100")
-		        .get().map(
-			    new Function<WS.Response, Result>() {
-			        public Result apply(WS.Response response) {
-			        	Logger.debug("tio");
-			        	Logger.debug(response.asJson().findPath("transactions").toString());
-			        	
-			        	for (int i = 0; i < response.asJson().findPath("transactions").size(); i++) { 
-			        		Logger.debug("héhé:"+    response.asJson().findPath("transactions").get(i).toString() );
-			        	}
-			        	
-			        	
-			            return ok(response.asJson().findPath("transactions"));   //
-			        }
-			    }
-			)
-		    );
-		 
+				.get().map(
+						new Function<WS.Response, Result>() {
+							public Result apply(WS.Response response) {
+								Logger.debug("tio");
+								Logger.debug(response.asJson().findPath("transactions").toString());
+
+								for (int i = 0; i < response.asJson().findPath("transactions").size(); i++) { 
+									Logger.debug("import from API AXABANQUE:"+    response.asJson().findPath("transactions").get(i).toString() );
+									JsonNode currentTransaction =  response.asJson().findPath("transactions").get(i);
+									// On initialise TransactionsListMock.axaTransactions.values()
+
+									AxaTransaction axaTransaction = new AxaTransaction();
+									axaTransaction.id = currentTransaction.get("id").getBigIntegerValue();
+									axaTransaction.accountId = currentTransaction.get("account").getBigIntegerValue();
+									axaTransaction.type = currentTransaction.get("type").toString();
+									axaTransaction.date = currentTransaction.get("date").toString();
+									axaTransaction.currency = currentTransaction.get("currency").toString();
+									axaTransaction.label = currentTransaction.get("label").toString();
+									axaTransaction.amount = currentTransaction.get("amount").getLongValue();
+									Logger.debug("axaTransaction.accountId:"+axaTransaction.accountId.toString());
+									Logger.debug("axaTransaction.amount:"+new Float(axaTransaction.amount).toString());
+									TransactionsListMock.axaTransactions.put(axaTransaction.id.toString(), axaTransaction);
+
+									String language = "en";
+									String country = "EN";
+									java.util.Locale locale = new java.util.Locale(language,country);
+									SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);  
+									//sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+									Logger.debug("$"+stripLeadingAndTrailingQuotes(axaTransaction.date)+"$");
+
+
+									TransactionSummary transactionSummary;
+									try {
+										transactionSummary = new TransactionSummary(axaTransaction.id.toString(),
+												sdf.parse(stripLeadingAndTrailingQuotes(axaTransaction.date)), new Float(axaTransaction.amount).toString(), axaTransaction.label, false);
+
+										Transaction transaction = new Transaction(transactionSummary);
+
+										TransactionsListMock.transactions.put(transactionSummary.id, transaction);
+										
+										
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+
+
+
+								}
+
+
+								return ok(response.asJson().findPath("transactions"));   //
+							}
+						}
+						)
+				);
+
 		/*
 		Gson gson = new Gson();
 
@@ -97,12 +111,24 @@ public class Job extends Controller {
 		//Collection<AxaTransaction> allTransactions = gson.fromJson(r3.toString(), collectionType);
 
 		//Logger.debug(new Integer(allTransactions.size()).toString());
-    	*/
+		 */
 
 		return r3;
 
 
 	}
 
+	 static String stripLeadingAndTrailingQuotes(String str)
+	  {
+	      if (str.startsWith("\""))
+	      {
+	          str = str.substring(1, str.length());
+	      }
+	      if (str.endsWith("\""))
+	      {
+	          str = str.substring(0, str.length() - 1);
+	      }
+	      return str;
+	  }
 
 }

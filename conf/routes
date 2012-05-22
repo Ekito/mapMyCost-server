@@ -9,7 +9,7 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
-GET     /job                   		controllers.Job.index()
+GET     /importFromAPI/:customerId/:accountId                 	controllers.Job.getAxaTransactions(customerId:String,accountId:String)		
 
 GET     /documentation              controllers.Application.documentation()
 
@@ -17,7 +17,7 @@ GET     /reset                      controllers.Application.reset()
 
 GET     /transactions               controllers.Application.allTransactions()
 
-GET     /transactions/:id           controllers.Application.transaction(id:String)
+GET     /transactions/:id           controllers.Application.transaction(id:String) 
 
 GET     /transactions/area/         controllers.Application.transactionsInArea()
 

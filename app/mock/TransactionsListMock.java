@@ -11,6 +11,7 @@ import models.TransactionSummary;
 public class TransactionsListMock {
 
 	public static Map<String, Transaction> transactions = new HashMap<String, Transaction>();
+	public static Map<String, AxaTransaction>  axaTransactions = new HashMap<String, AxaTransaction>();
 
 	static {
 
