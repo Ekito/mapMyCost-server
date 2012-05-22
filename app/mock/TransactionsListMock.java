@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import controllers.Job;
+
 import models.Transaction;
 import models.TransactionSummary;
 
@@ -16,6 +18,7 @@ public class TransactionsListMock {
 	static {
 
 		addSampleDataset();
+		Job.getAxaTransactions("1000000","20000001500",200); //récupère les 200 dernières opérations
 
 	}
 

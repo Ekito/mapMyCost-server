@@ -9,7 +9,7 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
-GET     /importFromAPI/:customerId/:accountId                 	controllers.Job.getAxaTransactions(customerId:String,accountId:String)		
+GET     /importFromAPI/:customerId/:accountId/:nbOp     	controllers.Job.getAxaTransactionsAPI(customerId:String,accountId:String,nbOp:String)		
 
 GET     /documentation              controllers.Application.documentation()
 
