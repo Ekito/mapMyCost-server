@@ -82,7 +82,7 @@ public class Job extends Controller {
 								  
 									//Logger.debug("appel récursif : (fcustomerId:"+fcustomerId+", faccountId:"+faccountId+", fpage:"+fpage+",fnbPageMax:"+fnbPageMax+", ffromDate:"+ffromDate+", fcount:"+fcount+")");
 									getAxaTransactionsByPage(fcustomerId, faccountId, fpage,fnbPageMax, ffromDate, fcount);
-
+ 
 								}
 
 								for (int i = 0; i < response.asJson().findPath("transactions").size(); i++) { 
