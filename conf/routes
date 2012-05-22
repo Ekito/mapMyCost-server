@@ -9,6 +9,8 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
+GET     /job                   		controllers.Job.index()
+
 GET     /documentation              controllers.Application.documentation()
 
 GET     /reset                      controllers.Application.reset()
