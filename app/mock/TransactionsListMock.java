@@ -14,11 +14,13 @@ public class TransactionsListMock {
 
 	public static Map<String, Transaction> transactions = new HashMap<String, Transaction>();
 	public static Map<String, AxaTransaction>  axaTransactions = new HashMap<String, AxaTransaction>();
+	public static Map<String, Merchant>  merchants = new HashMap<String, Merchant>();
+
 
 	static {
 
 		addSampleDataset();
-		Job.getAxaTransactions("1000000","20000001500",200); //récupère les 200 dernières opérations
+		Job.getAxaTransactions("1000000","20000001500",1000); //récupère les 200 dernières opérations
 
 	}
 
@@ -137,7 +139,7 @@ public class TransactionsListMock {
 
 		Transaction transaction = new Transaction(transactionSummary, lat, lon,
 				controllers.routes.Application.picture(transactionSummary.id)
-						.url());
+				.url());
 
 		transactions.put(transactionSummary.id, transaction);
 	}
@@ -148,3 +150,6 @@ public class TransactionsListMock {
 	}
 
 }
+
+
+

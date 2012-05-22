@@ -11,6 +11,9 @@ public class AxaTransaction {
 	public String currency;
 	public float amount; 
 	public String label;
+	public String merchant_registration_number;
+	public float longitude;
+	public float latitude;
 	
 
 }

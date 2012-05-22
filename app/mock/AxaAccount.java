@@ -11,7 +11,10 @@ public class AxaAccount {
 	public String currency;
 	public String bic;
 	public String label;
-	
-	
+
+
+
+
+ 
 
 }
