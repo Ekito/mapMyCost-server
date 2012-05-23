@@ -20,7 +20,7 @@ public class TransactionsListMock {
 	static {
 
 		addSampleDataset();
-		Job.getAxaTransactions("1000000","20000001500",1000); //récupère les 200 dernières opérations
+		Job.getAxaTransactions("1000000","20000001500",200, false); //récupère les 200 dernières opérations
 
 	}
 

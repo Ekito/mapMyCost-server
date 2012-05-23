@@ -24,11 +24,15 @@ import play.mvc.Result;
 public class Job extends Controller {
 
 
-	public static Result getAxaTransactionsAPI(String customerId, String accountId, String nbOp ) {
-		return getAxaTransactions( customerId,  accountId, new Integer (nbOp) ); 
+	public static Result getAxaTransactionsAPIwithGeo (String customerId, String accountId, String nbOp ) {
+		return getAxaTransactions( customerId,  accountId, new Integer (nbOp),true ); 
 	}
 
-	public static Result getAxaTransactions(String customerId, String accountId, Integer nbOp ) {
+	public static Result getAxaTransactionsAPIwithoutGeo (String customerId, String accountId, String nbOp ) {
+		return getAxaTransactions( customerId,  accountId, new Integer (nbOp), false ); 
+	}
+
+	public static Result getAxaTransactions(String customerId, String accountId, Integer nbOp, boolean withGeo ) {
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -60);
@@ -37,10 +41,10 @@ public class Job extends Controller {
 		Integer count = new Integer(50); 
 		Integer nbPageMax =  new Integer( nbOp  / count+1);
 
-		return getAxaTransactionsByPage (customerId,accountId,1,nbPageMax, date, count);
+		return getAxaTransactionsByPage (customerId,accountId,1,nbPageMax, date, count, withGeo);
 	}
 
-	public static Result getAxaTransactionsByPage(String customerId, String accountId, Integer page,Integer nbPageMax, Date fromDate, Integer count) {
+	public static Result getAxaTransactionsByPage(String customerId, String accountId, Integer page,Integer nbPageMax, Date fromDate, Integer count, boolean withGeo) {
 		//exemple : customerId: "1000000", accountId: 20000001520
 
 		final  String fcustomerId= customerId;
@@ -49,7 +53,7 @@ public class Job extends Controller {
 		final  Integer fpage = page+1;
 		final  Integer fnbPageMax = nbPageMax;
 		final Integer fcount = count;
-
+		final boolean fwithGeo = withGeo;
 
 
 		String language = "en";
@@ -58,8 +62,6 @@ public class Job extends Controller {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);  
 
 		Logger.debug("Intérogation API AXA Banque récupération en cours page: "+page+"/"+ nbPageMax);
-
-		//Logger.debug("Intérogation API AXA Banque récupération en cours page: "+page+"/"+ nbPageMax+  " ("+ sdf.format(fromDate)+"/"+sdf.format(new Date())+")");
 
 		AsyncResult r3 = async(
 				WS.url("https://sandbox-api.axabanque.fr/accounts/"+accountId+ "/transactions")
@@ -74,15 +76,10 @@ public class Job extends Controller {
 						new Function<WS.Response, Result>() {
 							public Result apply(WS.Response response) {
 
-								//Logger.debug(response.asJson().findPath("transactions").toString());
-								//Logger.debug("***** tout : "+response.asJson().toString()+ "****");
-
-								//Logger.debug("has_more:"+response.asJson().findValue("has_more").toString());
 								if (response.asJson().findValue("has_more").toString()=="true" && fpage<=fnbPageMax)
 								{
 
-									//Logger.debug("appel récursif : (fcustomerId:"+fcustomerId+", faccountId:"+faccountId+", fpage:"+fpage+",fnbPageMax:"+fnbPageMax+", ffromDate:"+ffromDate+", fcount:"+fcount+")");
-									getAxaTransactionsByPage(fcustomerId, faccountId, fpage,fnbPageMax, ffromDate, fcount);
+									getAxaTransactionsByPage(fcustomerId, faccountId, fpage,fnbPageMax, ffromDate, fcount,fwithGeo);
 
 								}
 
@@ -90,9 +87,6 @@ public class Job extends Controller {
 
 									JsonNode currentTransaction =  response.asJson().findPath("transactions").get(i);
 									// On initialise TransactionsListMock.axaTransactions.values()
-
-
-
 
 									AxaTransaction axaTransaction = new AxaTransaction();
 									axaTransaction.id = currentTransaction.get("id").getBigIntegerValue();
@@ -106,6 +100,9 @@ public class Job extends Controller {
 
 									Logger.debug(currentTransaction.toString());
 									JsonNode merchantNode = response.asJson().findPath("transactions").get(i).findPath("point_of_sale").get("merchant_registration_number");
+
+
+
 									if (merchantNode != null)
 									{
 										axaTransaction.merchant_registration_number = 	merchantNode.toString();
@@ -116,75 +113,71 @@ public class Job extends Controller {
 											merchant.merchant_registration_number = axaTransaction.merchant_registration_number;
 											TransactionsListMock.merchants.put(merchant.merchant_registration_number, merchant);
 
-											final String fcity = response.asJson().findPath("transactions").get(i).findPath("point_of_sale").findPath("location").get("city").toString();
-											final String fpostal_code = response.asJson().findPath("transactions").get(i).findPath("point_of_sale").findPath("location").get("postal_code").toString();
-											final String ftransaction = axaTransaction.id.toString();
-											//***
-											AsyncResult r3 = async(
-													WS.url("http://maps.google.com/maps/geo")
-													.setQueryParameter("q", stripLeadingAndTrailingQuotes(fcity)+","+stripLeadingAndTrailingQuotes(fpostal_code)+",france")
-													.setQueryParameter("output", "json")
-													.setQueryParameter("key", "ABQIAAAAOFKf-0uvhFXfdI1HCJYG-hT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRXLC_hBZN6abys3xBh__jp8aNXLQ")
-													.get().map(
-															new Function<WS.Response, Result>() {
-																public Result apply(WS.Response response) {
-																	Logger.debug("***** tout : "+response.asJson().toString()+ "****");
-																	Logger.debug("status:"+response.asJson().findPath("Status").get("code").toString());
-																	if (new Integer(response.asJson().findPath("Status").get("code").toString())==200)
-																	{
-																		String coordinates = response.asJson().findPath("Placemark").get(0).findPath("Point").get("coordinates").toString();
-																		Logger.debug ("########:"+coordinates);
-																	 
-																		String delims =  new String ("[\\[,\\]]");
-																		String[] tokens = coordinates.split(delims);
-																		Logger.debug(tokens[1]+"    ,    "+tokens[2]);
-																		
-																		Logger.debug ("retrouvé axaTransactions : "+TransactionsListMock.axaTransactions.get(ftransaction).id.toString());
-																		TransactionsListMock.axaTransactions.get(ftransaction).latitude = new Float(tokens[2]).floatValue();
-																		TransactionsListMock.axaTransactions.get(ftransaction).longitude = new Float(tokens[1]).floatValue();
-																		
-																		Logger.debug ("retrouvé transactions : "+TransactionsListMock.transactions.get(ftransaction).id.toString());
-																		TransactionsListMock.transactions.get(ftransaction).latitude = new Float(tokens[2]).floatValue();
-																		TransactionsListMock.transactions.get(ftransaction).longitude = new Float(tokens[1]).floatValue();
-																		TransactionsListMock.transactions.get(ftransaction).mapped = true;
-																		
-																		Logger.debug ("$$ coooooord transactions : "+new Float(TransactionsListMock.transactions.get(ftransaction).latitude).toString()+","+new Float(TransactionsListMock.transactions.get(ftransaction).longitude).toString());
+											if (fwithGeo)
+											{
+
+												final String fcity = response.asJson().findPath("transactions").get(i).findPath("point_of_sale").findPath("location").get("city").toString();
+												final String fpostal_code = response.asJson().findPath("transactions").get(i).findPath("point_of_sale").findPath("location").get("postal_code").toString();
+												final String ftransaction = axaTransaction.id.toString();
+												//***
+												AsyncResult r3 = async(
+														WS.url("http://maps.google.com/maps/geo")
+														.setQueryParameter("q", stripLeadingAndTrailingQuotes(fcity)+","+stripLeadingAndTrailingQuotes(fpostal_code)+",france")
+														.setQueryParameter("output", "json")
+														.setQueryParameter("key", "ABQIAAAAOFKf-0uvhFXfdI1HCJYG-hT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRXLC_hBZN6abys3xBh__jp8aNXLQ")
+														.get().map(
+																new Function<WS.Response, Result>() {
+																	public Result apply(WS.Response response) {
+																		 
+																		Logger.debug("status:"+response.asJson().findPath("Status").get("code").toString());
+																		if (new Integer(response.asJson().findPath("Status").get("code").toString())==200)
+																		{
+																			String coordinates = response.asJson().findPath("Placemark").get(0).findPath("Point").get("coordinates").toString();
+																			Logger.debug ("########:"+coordinates);
+
+																			String delims =  new String ("[\\[,\\]]");
+																			String[] tokens = coordinates.split(delims);
+																			
+																			TransactionsListMock.axaTransactions.get(ftransaction).latitude = new Float(tokens[2]).floatValue();
+																			TransactionsListMock.axaTransactions.get(ftransaction).longitude = new Float(tokens[1]).floatValue();
+
+																			
+																			TransactionsListMock.transactions.get(ftransaction).latitude = new Float(tokens[2]).floatValue();
+																			TransactionsListMock.transactions.get(ftransaction).longitude = new Float(tokens[1]).floatValue();
+																			TransactionsListMock.transactions.get(ftransaction).mapped = true;
+
+																			//Logger.debug ("$$ coooooord transactions : "+new Float(TransactionsListMock.transactions.get(ftransaction).latitude).toString()+","+new Float(TransactionsListMock.transactions.get(ftransaction).longitude).toString());
+																		}
+																		else
+																			Logger.debug ("######## reverse impossible");
+
+																		return ok();
 																	}
-																	else
-																		Logger.debug ("######## reverse impossible");
-																	
-
-																	
-																	return ok();
-
 																}
-
-															}));
-
+																)
+														);
+											}
 										}
 									}
-									//currentTransaction =  response.asJson().findPath("transactions").get(i);
-
+									 
 									String language = "en";
 									String country = "EN";
 									java.util.Locale locale = new java.util.Locale(language,country);
 									SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);  
-									//sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-
 
 									TransactionSummary transactionSummary;
 									try {
 										transactionSummary = new TransactionSummary
 												(stripLeadingAndTrailingQuotes(axaTransaction.id.toString()),
-												sdf.parse(stripLeadingAndTrailingQuotes(axaTransaction.date)), 
-												new Float(axaTransaction.amount).toString(), 
-												stripLeadingAndTrailingQuotes(axaTransaction.label), 
-												false);
-										
+														sdf.parse(stripLeadingAndTrailingQuotes(axaTransaction.date)), 
+														new Float(axaTransaction.amount).toString(), 
+														stripLeadingAndTrailingQuotes(axaTransaction.label), 
+														false);
+
 										Transaction transaction = new Transaction(transactionSummary);
-								
-										
-										
+
+
+
 
 										TransactionsListMock.transactions.put(transactionSummary.id, transaction);
 										Logger.debug("ajout de l'enreg");

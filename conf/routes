@@ -9,7 +9,9 @@ GET     /map                        controllers.Application.showMap()
 
 GET     /phonemap                   controllers.Application.phonemap()
 
-GET     /importFromAPI/:customerId/:accountId/:nbOp     	controllers.Job.getAxaTransactionsAPI(customerId:String,accountId:String,nbOp:String)		
+GET     /importFromAPIwithGeo/:customerId/:accountId/:nbOp     	controllers.Job.getAxaTransactionsAPIwithGeo(customerId:String,accountId:String,nbOp:String)		
+
+GET     /importFromAPIwithoutGeo/:customerId/:accountId/:nbOp     	controllers.Job.getAxaTransactionsAPIwithoutGeo(customerId:String,accountId:String,nbOp:String)		
 
 GET     /documentation              controllers.Application.documentation()
 

@@ -55,7 +55,7 @@ public class Application extends Controller {
 	public static Result reset() {
 
 		TransactionsListMock.addSampleDataset();
-		Job.getAxaTransactions("1000000","20000001500", 1000); 
+		Job.getAxaTransactions("1000000","20000001500", 200,false); 
 
 		return ok(views.html.map.render());
 
