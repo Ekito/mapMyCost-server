@@ -5,22 +5,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import controllers.Job;
-
 import models.Transaction;
 import models.TransactionSummary;
+import controllers.Job;
 
 public class TransactionsListMock {
 
 	public static Map<String, Transaction> transactions = new HashMap<String, Transaction>();
-	public static Map<String, AxaTransaction>  axaTransactions = new HashMap<String, AxaTransaction>();
-	public static Map<String, Merchant>  merchants = new HashMap<String, Merchant>();
-
+	public static Map<String, AxaTransaction> axaTransactions = new HashMap<String, AxaTransaction>();
+	public static Map<String, Merchant> merchants = new HashMap<String, Merchant>();
 
 	static {
 
 		addSampleDataset();
-		Job.getAxaTransactions("1000000","20000001500",200, false); //récupère les 200 dernières opérations
+		Job.getAxaTransactions("1000000", "20000001500", 200, false); // récupère
+																		// les
+																		// 200
+																		// dernières
+																		// opérations
 
 	}
 
@@ -63,10 +65,7 @@ public class TransactionsListMock {
 		addSampleTransaction("55555", today, "19.90", "Castela", 43.604899f,
 				1.442921f);
 
-		addSampleTransaction("66666", today, "39.90", "Pharmacie", 43.60681f,
-				1.442299f);
-
-		addSampleTransaction("77777", today, "49.50", "Cordonier", 43.606701f,
+		addSampleTransaction("77777", today, "49.50", "Cordonnier", 43.606701f,
 				1.444756f);
 
 		addSampleTransaction("88888", today, "35.90", "Virgin Megastore",
@@ -105,7 +104,7 @@ public class TransactionsListMock {
 				1.443973f);
 		addSampleTransaction("100019", today, "89", "Grenier d'Anais",
 				43.604138f, 1.444831f);
-		addSampleTransaction("100020", today, "32", "Ethic et Chix",
+		addSampleTransaction("100020", today, "32", "Ethic et Chic",
 				43.604542f, 1.44556f);
 		addSampleTransaction("100021", today, "32", "Carte Blanche",
 				43.603609f, 1.444187f);
@@ -139,7 +138,7 @@ public class TransactionsListMock {
 
 		Transaction transaction = new Transaction(transactionSummary, lat, lon,
 				controllers.routes.Application.picture(transactionSummary.id)
-				.url());
+						.url());
 
 		transactions.put(transactionSummary.id, transaction);
 	}
@@ -150,6 +149,3 @@ public class TransactionsListMock {
 	}
 
 }
-
-
-
