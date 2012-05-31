@@ -60,7 +60,7 @@ public class Job extends Controller {
 		final Integer fcount = count;
 		final boolean fwithGeo = withGeo;
 
-		Logger.debug("Intérogation API AXA Banque récupération en cours page: "
+		Logger.info("Intérogation API AXA Banque récupération en cours page: "
 				+ page + "/" + nbPageMax);
 
 		AsyncResult r3 = async(WS
@@ -113,7 +113,7 @@ public class Job extends Controller {
 									axaTransaction.id.toString(),
 									axaTransaction);
 
-							Logger.debug(currentTransaction.toString());
+							Logger.info(currentTransaction.toString());
 							JsonNode merchantNode = response.asJson()
 									.findPath("transactions").get(i)
 									.findPath("point_of_sale")
@@ -168,7 +168,7 @@ public class Job extends Controller {
 													public Result apply(
 															WS.Response response) {
 
-														Logger.debug("status:"
+														Logger.info("status:"
 																+ response
 																		.asJson()
 																		.findPath(
@@ -190,7 +190,7 @@ public class Job extends Controller {
 																			"Point")
 																	.get("coordinates")
 																	.toString();
-															Logger.debug("########:"
+															Logger.info("########:"
 																	+ coordinates);
 
 															String delims = new String(
@@ -223,7 +223,7 @@ public class Job extends Controller {
 															// Float(TransactionsListMock.transactions.get(ftransaction).latitude).toString()+","+new
 															// Float(TransactionsListMock.transactions.get(ftransaction).longitude).toString());
 														} else
-															Logger.debug("######## reverse impossible");
+															Logger.info("######## reverse impossible");
 
 														return ok();
 													}
@@ -255,12 +255,10 @@ public class Job extends Controller {
 
 								TransactionsListMock.transactions.put(
 										transactionSummary.id, transaction);
-								Logger.debug("ajout de l'enreg");
+								Logger.info("ajout de l'enreg");
 
 							} catch (ParseException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								Logger.debug(e.toString());
+								Logger.error("Parsing error", e);
 							}
 						}
 						return ok(response.asJson().findPath("transactions")); //
